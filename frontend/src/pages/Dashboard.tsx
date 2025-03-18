@@ -18,21 +18,46 @@ export const Dashboard: React.FC = () => {
     }, []);
 
     const [libraryVersion, setLibraryVersion] = useState<"v1" | "v2">("v1");
-    const [deviceState, setDeviceState] = useState({
-        connect: "Connected",
-        disconnect: "Disconnect",
-        isConnected: false,
-        battery: 0,
+    const [mockFunctions, setMockFunctions] = useState({
+        connect: "",
+        disconnect: "",
+        isConnected: "",
+        battery: "",
     });
+    const [deviceState, setDeviceState] = useState({
+        connected: false,
+        battery: 0
+    })
 
-    const dataMutation = trpc.mock.callMethod.useMutation({
+    const dataMutation = trpc.mock.all.useMutation({
         onSuccess: (data: any) => {
-            setDeviceState({
-                connect: data.connection,
-                disconnect: data.disconnect || 0,
-                isConnected: data.isConnected || false,
-                battery: data.batteryStatus || 0,
-            });
+            if (data.version === "v1") {
+                setMockFunctions({
+                    connect: data.connection,
+                    disconnect: data.disconnection,
+                    isConnected: data.connected,
+                    battery: data.readBatteryStatus,
+                });
+                const isConnected = new Function(`return ${data.connected}`)();
+                const batteryStatus = new Function(`return ${data.readBatteryStatus}`)();
+                setDeviceState({
+                    connected: isConnected(),
+                    battery: batteryStatus(),
+                });
+            } else {
+                setMockFunctions({
+                    connect: data.connect,
+                    disconnect: data.disconnect,
+                    isConnected: data.isConnected,
+                    battery: data.batteryStatus,
+                });
+                const isConnected = new Function(`return ${data.isConnected}`)();
+                const batteryStatus = new Function(`return ${data.batteryStatus}`)();
+                setDeviceState({
+                    connected: isConnected(),
+                    battery: batteryStatus(),
+                });
+            }
         },
         onError: (error: any) => {
             logger.error(error);
@@ -43,8 +68,7 @@ export const Dashboard: React.FC = () => {
 
     useEffect(() => {
         dataMutation.mutate({
-            version: "v2",
-            method: "connect"
+            version: libraryVersion,
         })
     }, [libraryVersion])
 
@@ -53,20 +77,20 @@ export const Dashboard: React.FC = () => {
     };
 
     const toggleConnection = () => {
-        if (libraryVersion === "v1") {
-            if (!deviceState.isConnected) {
-                logger.info("V1 connected")
-            } else {
-                logger.info("V1 disconnected")
-            }
-            setDeviceState({ ...deviceState, isConnected: !deviceState.isConnected, battery: Math.floor(Math.random() * 100) });
+        if (deviceState.connected) {
+            const disconnect = new Function(`return ${mockFunctions.disconnect}`)();
+            disconnect();
+            setDeviceState({
+                ...deviceState,
+                connected: !deviceState.connected,
+            });
         } else {
-            if (!deviceState.isConnected) {
-                logger.info("V2 connected")
-            } else {
-                logger.info("V2 disconnected")
-            }
-            setDeviceState({ ...deviceState, isConnected: !deviceState.isConnected, battery: Math.floor(Math.random() * 100) });
+            const connect = new Function(`return ${mockFunctions.connect}`)();
+            connect();
+            setDeviceState({
+                ...deviceState,
+                connected: !deviceState.connected,
+            });
         }
     };
 
@@ -98,7 +122,7 @@ export const Dashboard: React.FC = () => {
 
                 {/* Connection & Battery Status */}
                 <div className="mt-4 text-gray-700">
-                    <p>Connection: <span className="font-semibold">{deviceState.isConnected ? deviceState.connect : deviceState.disconnect}</span></p>
+                    <p>Connection: <span className="font-semibold">{deviceState.connected ? "true" : "false"}</span></p>
                     <p>Battery status: <span className="font-semibold">{deviceState.battery}%</span></p>
                 </div>
 

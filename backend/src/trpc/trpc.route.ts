@@ -50,11 +50,21 @@ export const trpcRouter = t.router({
       .input(z.object({ version: z.enum(["v1", "v2"]) }))
       .mutation(({ input }) => {
         const lib = loadMockLibrary(input.version);
+        if (input.version === "v1") {
+          return {
+            version: input.version,
+            connection: lib.connection.toString(),
+            disconnection: lib.disconnection.toString(),
+            connected: lib.connected.toString(),
+            readBatteryStatus: lib.readBatteryStatus.toString(),
+          };
+        }
         return {
-          connect: lib.connect(),
-          disconnect: lib.disconnect(),
-          isConnected: lib.isConnected(),
-          batteryStatus: lib.batteryStatus(),
+          version: input.version,
+          connect: lib.connect.toString(),
+          disconnect: lib.disconnect.toString(),
+          isConnected: lib.isConnected.toString(),
+          batteryStatus: lib.batteryStatus.toString(),
         };
       }),
   }),
