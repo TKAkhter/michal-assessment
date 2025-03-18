@@ -7,7 +7,7 @@ exports.loadMockLibrary = void 0;
 const child_process_1 = require("child_process");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const REPO_URL = process.env.MOCK_LIBRARY_PATH;
+const REPO_URL = process.env.MOCK_LIBRARY_PATH || "https://github.com/TKAkhter/michal-assessment-mockLibrary";
 const LIB_PATH = path_1.default.join(__dirname, "mockLibrary");
 const VERSION_FILE = path_1.default.join(LIB_PATH, "version.txt");
 const loadMockLibrary = (version) => {

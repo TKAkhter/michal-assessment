@@ -2,7 +2,7 @@ import { execSync } from "child_process";
 import path from "path";
 import fs from "fs";
 
-const REPO_URL = process.env.MOCK_LIBRARY_PATH;
+const REPO_URL = process.env.MOCK_LIBRARY_PATH || "https://github.com/TKAkhter/michal-assessment-mockLibrary";
 const LIB_PATH = path.join(__dirname, "mockLibrary");
 const VERSION_FILE = path.join(LIB_PATH, "version.txt");
 
