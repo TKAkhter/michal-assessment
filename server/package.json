@@ -4,8 +4,9 @@
   "description": "",
   "main": "build/server.js",
   "scripts": {
-    "build": "tsc",
-    "start": "npm run build && node --optimize_for_size build/server.js",
+    "clean": "rimraf build/",
+    "build": "npm run clean && tsc",
+    "start": "node --optimize_for_size build/server.js",
     "dev": "nodemon -exec --config nodemon.json 'ts-node' src/server.ts",
     "prisma:pull": "prisma db pull --force",
     "prisma:push": "prisma db push",
