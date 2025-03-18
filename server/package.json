@@ -5,7 +5,7 @@
   "main": "build/server.js",
   "scripts": {
     "build": "tsc",
-    "start": "node --optimize_for_size build/server.js",
+    "start": "'ts-node' src/server.ts",
     "dev": "nodemon -exec --config nodemon.json 'ts-node' src/server.ts",
     "prisma:pull": "prisma db pull --force",
     "prisma:push": "prisma db push",
