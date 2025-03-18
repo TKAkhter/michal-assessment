@@ -1,32 +1,16 @@
 {
   "compilerOptions": {
-    "incremental": true,
-    "target": "es2019",
-    "module": "commonjs",
-    "declaration": true,
-    "sourceMap": true,
-    "removeComments": true,
-    "outDir": "./build",
-    "skipLibCheck": true,
+    "target": "ES6",
+    "module": "CommonJS",
     "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictBindCallApply": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./",
-    "resolveJsonModule": true,
+    "moduleResolution": "Node",
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  },
-  "tsc-alias": {
-    "verbose": false,
-    "resolveFullPaths": true
-  },
-  "include": ["src", "src/types", "./node_modules/@types", "@types/jest", "tests"],
-  "exclude": ["node_modules", "build"]
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./",
+    "outDir": "./build",
+    "paths": {},
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node"]
+  }
 }
