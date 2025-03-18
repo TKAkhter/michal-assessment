@@ -55,5 +55,16 @@ exports.trpcRouter = t.router({
             const data = lib[input.method]();
             return { [input.method]: data };
         }),
+        all: t.procedure
+            .input(zod_1.z.object({ version: zod_1.z.enum(["v1", "v2"]) }))
+            .mutation(({ input }) => {
+            const lib = (0, mockLoader_1.loadMockLibrary)(input.version);
+            return {
+                connect: lib.connect(),
+                disconnect: lib.disconnect(),
+                isConnected: lib.isConnected(),
+                batteryStatus: lib.batteryStatus(),
+            };
+        }),
     }),
 });
