@@ -2,14 +2,18 @@
   "compilerOptions": {
     "incremental": true,
     "target": "ES6",
+    "lib": ["ESNext", "DOM"],
     "module": "CommonJS",
     "strict": true,
+    "moduleResolution": "Node",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
     "outDir": "./build",
-    "paths": {},
+    "paths": {}
   },
   "include": ["src", "src/types"],
   "exclude": ["node_modules", "build"]

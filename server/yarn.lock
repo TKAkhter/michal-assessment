@@ -993,7 +993,7 @@
 
 "@types/bcrypt@^5.0.2":
   version "5.0.2"
-  resolved "https://registry.npmjs.org/@types/bcrypt/-/bcrypt-5.0.2.tgz"
+  resolved "https://registry.yarnpkg.com/@types/bcrypt/-/bcrypt-5.0.2.tgz#22fddc11945ea4fbc3655b3e8b8847cc9f811477"
   integrity sha512-6atioO8Y75fNcbmj0G7UjI9lXN2pQ/IGJ2FWT4a/btd0Lk9lQalHLKhkgKVZ3r+spnmWUKfbMi1GEe9wyHQfNQ==
   dependencies:
     "@types/node" "*"
@@ -1008,14 +1008,14 @@
 
 "@types/compression@^1.7.5":
   version "1.7.5"
-  resolved "https://registry.npmjs.org/@types/compression/-/compression-1.7.5.tgz"
+  resolved "https://registry.yarnpkg.com/@types/compression/-/compression-1.7.5.tgz#0f80efef6eb031be57b12221c4ba6bc3577808f7"
   integrity sha512-AAQvK5pxMpaT+nDvhHrsBhLSYG5yQdtkaJE1WYieSNY2mVFKAgmU4ks65rkZD5oqnGCFLyQpUr1CqI4DmUMyDg==
   dependencies:
     "@types/express" "*"
 
 "@types/connect-timeout@^0.0.39":
   version "0.0.39"
-  resolved "https://registry.npmjs.org/@types/connect-timeout/-/connect-timeout-0.0.39.tgz"
+  resolved "https://registry.yarnpkg.com/@types/connect-timeout/-/connect-timeout-0.0.39.tgz#8b6800599808688ae74d1352e702a24d2cca4ee1"
   integrity sha512-PHUX9yixjm4qjQ27Uz+F5cyG9Fio9iY7e6eWHvNT0wbA8eu9JaDqxRRiXn5uYnd09zx1fM+wEHnuBHMm9gwOuQ==
   dependencies:
     "@types/express" "*"
@@ -1029,7 +1029,7 @@
 
 "@types/cookie-parser@^1.4.8":
   version "1.4.8"
-  resolved "https://registry.npmjs.org/@types/cookie-parser/-/cookie-parser-1.4.8.tgz"
+  resolved "https://registry.yarnpkg.com/@types/cookie-parser/-/cookie-parser-1.4.8.tgz#d2215e7915f624fbfe4233da8f063f511679f1f3"
   integrity sha512-l37JqFrOJ9yQfRQkljb41l0xVphc7kg5JTjjr+pLRZ0IyZ49V4BQ8vbF4Ut2C2e+WH4al3xD3ZwYwIUfnbT4NQ==
 
 "@types/cookiejar@^2.1.5":
@@ -1039,7 +1039,7 @@
 
 "@types/cors@^2.8.17":
   version "2.8.17"
-  resolved "https://registry.npmjs.org/@types/cors/-/cors-2.8.17.tgz"
+  resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.17.tgz#5d718a5e494a8166f569d986794e49c48b216b2b"
   integrity sha512-8CGDvrBj1zgo2qE+oS3pOCyYNqCPryMWY2bGfwA0dcfopWGgxs+78df0Rs3rc9THP4JkOhLsAa+15VdpAqkcUA==
   dependencies:
     "@types/node" "*"
@@ -1059,9 +1059,19 @@
     "@types/range-parser" "*"
     "@types/send" "*"
 
-"@types/express@*", "@types/express@^5.0.0":
+"@types/express@*":
   version "5.0.0"
   resolved "https://registry.npmjs.org/@types/express/-/express-5.0.0.tgz"
+  integrity sha512-DvZriSMehGHL1ZNLzi6MidnsDhUZM/x2pRdDIKdwbUNqqwHxMlRdkxtn6/EPKyqKpHqTl/4nRZsRNLpZxZRpPQ==
+  dependencies:
+    "@types/body-parser" "*"
+    "@types/express-serve-static-core" "^5.0.0"
+    "@types/qs" "*"
+    "@types/serve-static" "*"
+
+"@types/express@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/express/-/express-5.0.0.tgz#13a7d1f75295e90d19ed6e74cab3678488eaa96c"
   integrity sha512-DvZriSMehGHL1ZNLzi6MidnsDhUZM/x2pRdDIKdwbUNqqwHxMlRdkxtn6/EPKyqKpHqTl/4nRZsRNLpZxZRpPQ==
   dependencies:
     "@types/body-parser" "*"
@@ -1078,14 +1088,19 @@
 
 "@types/hpp@^0.2.6":
   version "0.2.6"
-  resolved "https://registry.npmjs.org/@types/hpp/-/hpp-0.2.6.tgz"
+  resolved "https://registry.yarnpkg.com/@types/hpp/-/hpp-0.2.6.tgz#e2f576f0f953d18aa8c0c7ca5300f3cd362352a6"
   integrity sha512-6gn1RuHA1/XFCVCqCkSV+AWy07YwtGg4re4SHhLMoiARTg9XlrbYMtVR+Uvws0VlERXzzcA+1UYvxEV6O+sgPg==
   dependencies:
     "@types/express" "*"
 
-"@types/http-errors@*", "@types/http-errors@^2.0.4":
+"@types/http-errors@*":
   version "2.0.4"
   resolved "https://registry.npmjs.org/@types/http-errors/-/http-errors-2.0.4.tgz"
+  integrity sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==
+
+"@types/http-errors@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@types/http-errors/-/http-errors-2.0.4.tgz#7eb47726c391b7345a6ec35ad7f4de469cf5ba4f"
   integrity sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
@@ -1134,7 +1149,7 @@
 
 "@types/jsonwebtoken@^9.0.9":
   version "9.0.9"
-  resolved "https://registry.npmjs.org/@types/jsonwebtoken/-/jsonwebtoken-9.0.9.tgz"
+  resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-9.0.9.tgz#a4c3a446c0ebaaf467a58398382616f416345fb3"
   integrity sha512-uoe+GxEuHbvy12OUQct2X9JenKM3qAscquYymuQN4fMWG9DBQtykrQEFcAbVACF7qaLw9BePSodUL0kquqBJpQ==
   dependencies:
     "@types/ms" "*"
@@ -1157,7 +1172,7 @@
 
 "@types/morgan@^1.9.9":
   version "1.9.9"
-  resolved "https://registry.npmjs.org/@types/morgan/-/morgan-1.9.9.tgz"
+  resolved "https://registry.yarnpkg.com/@types/morgan/-/morgan-1.9.9.tgz#d60dec3979e16c203a000159daa07d3fb7270d7f"
   integrity sha512-iRYSDKVaC6FkGSpEVVIvrRGw0DfJMiQzIn3qr2G5B3C//AWkulhXgaBd7tS9/J79GWSYMTHGs7PfI5b3Y8m+RQ==
   dependencies:
     "@types/node" "*"
@@ -1174,9 +1189,16 @@
   dependencies:
     "@types/express" "*"
 
-"@types/node@*", "@types/node@^22.13.10":
+"@types/node@*":
   version "22.13.10"
   resolved "https://registry.npmjs.org/@types/node/-/node-22.13.10.tgz"
+  integrity sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==
+  dependencies:
+    undici-types "~6.20.0"
+
+"@types/node@^22.13.10":
+  version "22.13.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.13.10.tgz#df9ea358c5ed991266becc3109dc2dc9125d77e4"
   integrity sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==
   dependencies:
     undici-types "~6.20.0"
@@ -1193,7 +1215,7 @@
 
 "@types/response-time@^2.3.8":
   version "2.3.8"
-  resolved "https://registry.npmjs.org/@types/response-time/-/response-time-2.3.8.tgz"
+  resolved "https://registry.yarnpkg.com/@types/response-time/-/response-time-2.3.8.tgz#cd8618080eeec73a7f3386fc2a9f6ea5c46f36be"
   integrity sha512-7qGaNYvdxc0zRab8oHpYx7AW17qj+G0xuag1eCrw3M2VWPJQ/HyKaaghWygiaOUl0y9x7QGQwppDpqLJ5V9pzw==
   dependencies:
     "@types/express" "*"
