@@ -1,0 +1,24 @@
+export declare const env: {
+    NODE_ENV: "local" | "development" | "test" | "production";
+    TZ: string;
+    BASE_URL: string;
+    PORT: number;
+    SERVER_TIMEOUT: string;
+    LOG_FILE_DURATION: string;
+    ALLOW_ORIGIN: string;
+    APP_URL: string;
+    LOGS_DIRECTORY: string;
+    BP_GENERATED_PASSWORD_LENGTH: string;
+    JWT_SECRET: string;
+    JWT_SECRET_EXPIRATION: string;
+    HASH: number;
+    MONGODB_URI: string;
+    ENABLE_WINSTON: "0" | "1";
+    ENABLE_LOGS: "0" | "1";
+    ENABLE_ERROR_LOGS: "0" | "1";
+    LOGS_TYPE: "mongodb" | "directory";
+    MONGODB_ERROR_COLLECTION_NAME: string;
+    MONGODB_MEMORY_LIMIT: string;
+    BASE_URL_HTTPS?: string | undefined;
+    MOCK_LIBRARY_PATH?: string | undefined;
+};
