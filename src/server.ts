@@ -1,9 +1,7 @@
 import app from "@/app";
 import { env } from "@/config/env";
 import { logger } from "@/common/winston/winston";
-import { checkRedis } from "@/entities/health/health.helper";
 import { connectPrisma } from "./config/prisma/prisma";
-import { RedisClient } from "./config/redis/redis";
 
 const { PORT, NODE_ENV, BASE_URL, ALLOW_ORIGIN } = env;
 
@@ -14,8 +12,6 @@ const { PORT, NODE_ENV, BASE_URL, ALLOW_ORIGIN } = env;
 async function checkConnections() {
   try {
     logger.info("Checking database connections...");
-    await checkRedis();
-    logger.info("Redis connections verified successfully.");
     await connectPrisma();
     logger.info("Prisma connections verified successfully.");
   } catch (error) {
@@ -44,23 +40,6 @@ checkConnections().then(() => {
   // Graceful shutdown logic
   const onCloseSignal = async () => {
     logger.info("SIGTERM signal received. Closing server...");
-    const redis = RedisClient.getInstance();
-
-    // Close Prisma connection
-    try {
-      await redis.disconnect();
-      logger.info("Prisma disconnected successfully.");
-    } catch (err) {
-      logger.error("Error disconnecting Prisma:", { err });
-    }
-
-    // Close Redis connection
-    try {
-      await redis.quit();
-      logger.info("Redis disconnected successfully.");
-    } catch (err) {
-      logger.error("Error disconnecting Redis:", { err });
-    }
 
     // Close Express server
     server.close(() => {

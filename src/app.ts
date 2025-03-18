@@ -1,9 +1,8 @@
-import { errorMiddleware, cors } from "@/middlewares";
+import { cors } from "@/middlewares/cors";
 import express, { NextFunction, Request, Response } from "express";
 import { apiRoutes } from "@/routes/routes";
 import { env } from "@/config/env";
 import { logger, morganStream } from "@/common/winston/winston";
-import { openAPIRouter } from "@/common/swagger/swagger.router";
 import { slowDown } from "express-slow-down";
 import compression from "compression";
 import cookieParser from "cookie-parser";
@@ -100,23 +99,11 @@ app.use((_, res, next) => {
 });
 
 // Routes
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-logger.info("Uploads routes set up");
-
 app.use("/logs", express.static(path.join(__dirname, "../logs")));
 logger.info("Logs routes set up");
 
 app.use("/api", apiRoutes);
 logger.info("API routes set up");
-
-// Swagger UI
-app.use(openAPIRouter);
-logger.info("Swagger UI routes set up");
-
-// Custom Error Handler Middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  errorMiddleware(err, req, res, next);
-});
 
 // Catch 404 and forward to error handler
 app.use((_: Request, res: Response) => {

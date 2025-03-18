@@ -16,9 +16,6 @@ const envSchema = z.object({
   LOGS_DIRECTORY: z.string(),
   BP_GENERATED_PASSWORD_LENGTH: z.string().default("10"),
 
-  // Redis Configuration
-  REDIS_URL: z.string(),
-
   // Basic Auth Secrets
   JWT_SECRET: z.string(),
   JWT_SECRET_EXPIRATION: z.string().default("1d"),
@@ -32,11 +29,7 @@ const envSchema = z.object({
   MONGODB_ERROR_COLLECTION_NAME: z.string(),
   MONGODB_MEMORY_LIMIT: z.string().default("512"),
 
-  // Mail sender
-  MAILGUN_API_KEY: z.string().optional(),
-  MAILGUN_DOMAIN: z.string().optional(),
-  MAILGUN_SENDER_EMAIL: z.string().optional(),
-  MAILGUN_NAME: z.string().optional(),
+  MOCK_LIBRARY_PATH: z.string().optional(),
 });
 
 export const env = envSchema.parse(process.env);

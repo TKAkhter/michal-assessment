@@ -1,10 +1,8 @@
 import { Router } from "express";
-import authRouter from "@/entities/auth/auth.route";
-import usersRouter from "@/entities/users/users.route";
-import healthRouter from "@/entities/health/health.route";
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import { trpcRouter } from "@/trpc/trpc.route";
+import { createContext } from "@/trpc/trpc.context";
 
 export const apiRoutes = Router();
 
-apiRoutes.use("/health", healthRouter);
-apiRoutes.use("/auth", authRouter);
-apiRoutes.use("/users", usersRouter);
+apiRoutes.use("/trpc", createExpressMiddleware({ router: trpcRouter, createContext }));
