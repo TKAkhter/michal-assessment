@@ -1,18 +1,17 @@
 import "winston-daily-rotate-file";
 import { createLogger, format, transports, Logger } from "winston";
 import { StatusCodes } from "http-status-codes";
-import { env } from "../../config/env";
 import fs from "fs";
 import colors from "colors/safe";
 import "winston-mongodb";
 
-const isWinstonEnabled = env.ENABLE_WINSTON === "1";
-const isLogsEnabled = env.ENABLE_LOGS === "1";
-const logsDirectory = env.LOGS_DIRECTORY;
-const logsType = env.LOGS_TYPE;
-const timeZone = env.TZ;
-const logsFileDuration = env.LOG_FILE_DURATION;
-const mongodbURI = env.MONGODB_URI;
+const isWinstonEnabled = process.env.ENABLE_WINSTON === "1";
+const isLogsEnabled = process.env.ENABLE_LOGS === "1";
+const logsDirectory = process.env.LOGS_DIRECTORY || "";
+const logsType = process.env.LOGS_TYPE;
+const timeZone = process.env.TZ;
+const logsFileDuration = process.env.LOG_FILE_DURATION ;
+const mongodbURI = process.env.MONGODB_URI || "";
 
 if (!fs.existsSync(logsDirectory) && isWinstonEnabled && logsType !== "mongodb") {
   fs.mkdirSync(logsDirectory);
@@ -63,8 +62,8 @@ const fileFormat = format.combine(
 const createMongoTransport = () =>
   new transports.MongoDB({
     db: mongodbURI,
-    dbName: env.NODE_ENV,
-    collection: env.MONGODB_ERROR_COLLECTION_NAME,
+    dbName: process.env.NODE_ENV,
+    collection: process.env.MONGODB_ERROR_COLLECTION_NAME,
     level: "error",
     format: format.combine(
       format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),

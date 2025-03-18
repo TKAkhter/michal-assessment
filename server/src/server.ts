@@ -1,9 +1,8 @@
 import app from "./app";
-import { env } from "./config/env";
 import { logger } from "./common/winston/winston";
 import { connectPrisma } from "./config/prisma/prisma";
 
-const { PORT, NODE_ENV, BASE_URL, ALLOW_ORIGIN } = env;
+const { PORT, NODE_ENV, BASE_URL, ALLOW_ORIGIN } = process.env;
 
 /**
  * Function to check the connection status for Redis, and MongoDB.
@@ -31,7 +30,7 @@ async function checkConnections() {
  * Logs the server status on startup and graceful shutdown.
  */
 checkConnections().then(() => {
-  const server = app.listen(PORT, () =>
+  const server = app.listen(PORT || 5000, () =>
     logger.info(
       `Server running on PORT: ${PORT}, ==> ENV: ${NODE_ENV}, ==> API: ${BASE_URL}, ==> ALLOW_ORIGIN: ${ALLOW_ORIGIN}`,
     ),

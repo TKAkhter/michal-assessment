@@ -1,9 +1,8 @@
 import corsLibrary from "cors";
 import { StatusCodes } from "http-status-codes";
-import { env } from "../config/env";
 import { logger } from "../common/winston/winston";
 
-const allowedOrigins = (env.ALLOW_ORIGIN || "").split(",");
+const allowedOrigins = (process.env.ALLOW_ORIGIN || "").split(",");
 
 /**
  * CORS configuration to check allowed origins and set the appropriate headers
@@ -31,7 +30,7 @@ export const config = {
   credentials: true,
   exposedHeaders: ["Content-Type", "set-cookie"],
   options: {
-    "Access-Control-Allow-Origin": env.ALLOW_ORIGIN || "*",
+    "Access-Control-Allow-Origin": process.env.ALLOW_ORIGIN || "*",
     "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
     "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,PUT,POST,DELETE",
   },

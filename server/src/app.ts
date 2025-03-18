@@ -1,7 +1,6 @@
 import { cors } from "./middlewares/cors";
 import express, { NextFunction, Request, Response } from "express";
 import { apiRoutes } from "./routes/routes";
-import { env } from "./config/env";
 import { logger, morganStream } from "./common/winston/winston";
 import { slowDown } from "express-slow-down";
 import compression from "compression";
@@ -67,7 +66,7 @@ app.use(cors); // Make sure this middleware is defined properly
 logger.info("CORS middleware applied");
 app.use(cookieParser());
 
-if (env.ENABLE_WINSTON === "1") {
+if (process.env.ENABLE_WINSTON === "1") {
   app.use(morgan("dev", { stream: morganStream }));
 } else {
   app.use(morgan("dev"));
@@ -88,7 +87,7 @@ app.use(responseTime());
 logger.info("Response time middleware applied");
 
 // Timeout Middleware
-app.use(timeout(env.SERVER_TIMEOUT)); // Set a 150-second timeout for all routes
+app.use(timeout(process.env.SERVER_TIMEOUT || "150s")); // Set a 150-second timeout for all routes
 logger.info("Timeout middleware applied"); // Log timeout middleware
 
 // Permissions Policy
