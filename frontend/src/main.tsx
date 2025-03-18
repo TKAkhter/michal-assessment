@@ -5,8 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import "./index.css";
 import { trpc } from "./trpc/client";
-import { Provider } from "react-redux";
-import store from "./redux/store";
+import { BrowserRouter } from "react-router-dom";
 import { ToastNotifier } from "./components/ToastNotifier";
 
 const client = new QueryClient();
@@ -19,14 +18,12 @@ const trpcClient = trpc.createClient({
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <trpc.Provider client={trpcClient} queryClient={client}>
-      <Provider store={store}>
-        <QueryClientProvider client={client}>
-          <ToastNotifier />
-          <App />
-        </QueryClientProvider>
-      </Provider>
-    </trpc.Provider>
-  </React.StrictMode>
+  <trpc.Provider client={trpcClient} queryClient={client}>
+    <QueryClientProvider client={client}>
+      <BrowserRouter>
+        <ToastNotifier />
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
+  </trpc.Provider>
 );

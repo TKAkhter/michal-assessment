@@ -1,5 +1,5 @@
-import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
 export const addDelay = async (delay: number) => {
   // eslint-disable-next-line no-promise-executor-return

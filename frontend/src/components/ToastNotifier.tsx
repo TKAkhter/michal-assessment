@@ -1,11 +1,8 @@
 import React from "react";
 import { ToastContainer, Bounce } from "react-toastify";
 import { sanitizeString } from "../utils/utils";
-import useLocalStorage from "../hooks/useLocalStorage";
 
 export const ToastNotifier = () => {
-  const [colorMode] = useLocalStorage("color-theme", "light");
-
   return (
     <ToastContainer
       position="top-right"
@@ -17,7 +14,7 @@ export const ToastNotifier = () => {
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme={sanitizeString(colorMode || "light")}
+      theme={sanitizeString("light")}
       transition={Bounce}
     />
   );
