@@ -4,32 +4,39 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { trpc } from "@/trpc/client";
 import logger from "@/common/pino";
-
-// MockLibrary v1
-const MockLibraryV1 = {
-    connection: () => console.log("Connected (v1)"),
-    disconnection: () => console.log("Disconnected (v1)"),
-    connected: () => true,
-    readBatteryStatus: () => 40, // Mock battery %
-};
-
-// MockLibrary v2
-const MockLibraryV2 = {
-    connect: () => console.log("Connected (v2)"),
-    disconnect: () => console.log("Disconnected (v2)"),
-    isConnected: () => false,
-    batteryStatus: () => 80, // Mock battery %
-};
+import { isTokenValid } from "@/utils/utils";
+import { toast } from "react-toastify";
 
 export const Dashboard: React.FC = () => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (isTokenValid(token)) {
+            navigate("/");
+        }
+    }, []);
+
     const [libraryVersion, setLibraryVersion] = useState<"v1" | "v2">("v1");
-    const [connected, setConnected] = useState(false);
-    const [battery, setBattery] = useState(0);
+    const [deviceState, setDeviceState] = useState({
+        connect: "Connected",
+        disconnect: "Disconnect",
+        isConnected: false,
+        battery: 0,
+    });
 
     const dataMutation = trpc.mock.callMethod.useMutation({
         onSuccess: (data: any) => {
-            logger.info(data);
+            setDeviceState({
+                connect: data.connection,
+                disconnect: data.disconnect || 0,
+                isConnected: data.isConnected || false,
+                battery: data.batteryStatus || 0,
+            });
+        },
+        onError: (error: any) => {
+            logger.error(error);
+            toast.error(error.msg);
         },
     });
 
@@ -43,27 +50,23 @@ export const Dashboard: React.FC = () => {
 
     const handleLibraryChange = (version: "v1" | "v2") => {
         setLibraryVersion(version);
-        setConnected(false); // Reset connection state
-        setBattery(0);
     };
 
     const toggleConnection = () => {
         if (libraryVersion === "v1") {
-            if (!connected) {
-                MockLibraryV1.connection();
+            if (!deviceState.isConnected) {
+                logger.info("V1 connected")
             } else {
-                MockLibraryV1.disconnection();
+                logger.info("V1 disconnected")
             }
-            setConnected(!connected);
-            setBattery(MockLibraryV1.readBatteryStatus());
+            setDeviceState({ ...deviceState, isConnected: !deviceState.isConnected, battery: Math.floor(Math.random() * 100) });
         } else {
-            if (!connected) {
-                MockLibraryV2.connect();
+            if (!deviceState.isConnected) {
+                logger.info("V2 connected")
             } else {
-                MockLibraryV2.disconnect();
+                logger.info("V2 disconnected")
             }
-            setConnected(!connected);
-            setBattery(MockLibraryV2.batteryStatus());
+            setDeviceState({ ...deviceState, isConnected: !deviceState.isConnected, battery: Math.floor(Math.random() * 100) });
         }
     };
 
@@ -95,13 +98,13 @@ export const Dashboard: React.FC = () => {
 
                 {/* Connection & Battery Status */}
                 <div className="mt-4 text-gray-700">
-                    <p>Connection: <span className="font-semibold">{connected ? "Connected" : "Disconnected"}</span></p>
-                    <p>Battery status: <span className="font-semibold">{battery}%</span></p>
+                    <p>Connection: <span className="font-semibold">{deviceState.isConnected ? deviceState.connect : deviceState.disconnect}</span></p>
+                    <p>Battery status: <span className="font-semibold">{deviceState.battery}%</span></p>
                 </div>
 
                 {/* Connect/Disconnect Button */}
                 <Button className="w-full mt-4 bg-black text-white" onClick={toggleConnection}>
-                    {connected ? "Disconnect" : "Connect"}
+                    Connect/Disconnect
                 </Button>
             </div>
         </div>
