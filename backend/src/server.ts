@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import app from "./app";
 import { logger } from "./common/winston/winston";
 import { connectPrisma } from "./config/prisma/prisma";
