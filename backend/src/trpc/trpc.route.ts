@@ -46,6 +46,17 @@ export const trpcRouter = t.router({
         const data = lib[input.method as keyof typeof lib]();
         return { [input.method]: data };
       }),
+    all: t.procedure
+      .input(z.object({ version: z.enum(["v1", "v2"]) }))
+      .mutation(({ input }) => {
+        const lib = loadMockLibrary(input.version);
+        return {
+          connect: lib.connect(),
+          disconnect: lib.disconnect(),
+          isConnected: lib.isConnected(),
+          batteryStatus: lib.batteryStatus(),
+        };
+      }),
   }),
 });
 
