@@ -6,7 +6,6 @@ import colors from "colors/safe";
 import "winston-mongodb";
 
 const isWinstonEnabled = process.env.ENABLE_WINSTON === "1";
-const isLogsEnabled = process.env.ENABLE_LOGS === "1";
 const logsDirectory = process.env.LOGS_DIRECTORY || "";
 const logsType = process.env.LOGS_TYPE;
 const timeZone = process.env.TZ;
@@ -132,16 +131,16 @@ export const logger = isWinstonEnabled
   ? {
       // eslint-disable-next-line no-confusing-arrow
       info: (message: string, metadata?: Record<string, unknown>) =>
-        isLogsEnabled ? winstonLogger.info(message, metadata) : null, // eslint-disable-line multiline-ternary
+        winstonLogger.info(message, metadata), // eslint-disable-line multiline-ternary
       // eslint-disable-next-line no-confusing-arrow
       debug: (message: string, metadata?: Record<string, unknown>) =>
-        isLogsEnabled ? winstonLogger.debug(message, metadata) : null, // eslint-disable-line multiline-ternary
+        winstonLogger.debug(message, metadata), // eslint-disable-line multiline-ternary
 
       warn: (message: string, metadata?: Record<string, unknown>) =>
         winstonLogger.warn(message, metadata),
       // eslint-disable-next-line no-confusing-arrow
       http: (message: string, metadata?: Record<string, unknown>) =>
-        isLogsEnabled ? winstonLogger.http(message, metadata) : null, // eslint-disable-line multiline-ternary
+        winstonLogger.http(message, metadata), // eslint-disable-line multiline-ternary
 
       error: (message: string, metadata?: Record<string, unknown>) =>
         winstonLogger.error(message, metadata),
@@ -149,16 +148,16 @@ export const logger = isWinstonEnabled
   : {
       // eslint-disable-next-line no-confusing-arrow
       info: (message: string, metadata?: Record<string, unknown>) =>
-        isLogsEnabled ? console.log(colors.green(message), metadata ?? "") : null, // eslint-disable-line multiline-ternary
+        console.log(colors.green(message), metadata ?? ""), // eslint-disable-line multiline-ternary
       // eslint-disable-next-line no-confusing-arrow
       debug: (message: string, metadata?: Record<string, unknown>) =>
-        isLogsEnabled ? console.log(colors.magenta(message), metadata ?? "") : null, // eslint-disable-line multiline-ternary
+        console.log(colors.magenta(message), metadata ?? ""), // eslint-disable-line multiline-ternary
 
       warn: (message: string, metadata?: Record<string, unknown>) =>
         console.log(colors.yellow(message), metadata ?? ""),
       // eslint-disable-next-line no-confusing-arrow
       http: (message: string, metadata?: Record<string, unknown>) =>
-        isLogsEnabled ? console.log(colors.blue(message), metadata ?? "") : null, // eslint-disable-line multiline-ternary
+        console.log(colors.blue(message), metadata ?? ""), // eslint-disable-line multiline-ternary
 
       error: (message: string, metadata?: Record<string, unknown>) =>
         console.log(colors.red(message), formatConsoleMetaData(metadata) ?? ""),
