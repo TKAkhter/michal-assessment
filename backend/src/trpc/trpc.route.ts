@@ -2,7 +2,7 @@ import { initTRPC } from "@trpc/server";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { Context } from "./trpc.context";
-import { loadMockLibrary } from "../mock/mockLoader";
+import { loadMockLibrary } from "../mock/mockLoaderMemory";
 import { generateToken } from "../common/jwt/jwt";
 
 const t = initTRPC.context<Context>().create();
@@ -41,15 +41,15 @@ export const trpcRouter = t.router({
 
     callMethod: t.procedure
       .input(z.object({ version: z.enum(["v1", "v2"]), method: z.string() }))
-      .mutation(({ input }) => {
-        const lib = loadMockLibrary(input.version);
+      .mutation(async ({ input }) => {
+        const lib = await loadMockLibrary(input.version);
         const data = lib[input.method as keyof typeof lib]();
         return { [input.method]: data };
       }),
     all: t.procedure
       .input(z.object({ version: z.enum(["v1", "v2"]) }))
-      .mutation(({ input }) => {
-        const lib = loadMockLibrary(input.version);
+      .mutation(async ({ input }) => {
+        const lib = await loadMockLibrary(input.version);
         if (input.version === "v1") {
           return {
             version: input.version,

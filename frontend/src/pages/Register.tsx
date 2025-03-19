@@ -4,12 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { trpc } from "@/trpc/client";
 import { isTokenValid } from "@/utils/utils";
+import { toast } from "react-toastify";
+import logger from "@/common/pino";
 
 export const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const registerMutation = trpc.auth.register.useMutation({
-    onSuccess: () => navigate("/login"),
+    onSuccess: () => {
+      toast.success("Registration successful!");
+      navigate("/login");
+    },
+    onError: (error: any) => {
+      logger.error(error);
+      toast.error("Username or email already exist or invalid email or password");
+    },
   });
 
   useEffect(() => {
@@ -57,10 +66,11 @@ export const Register: React.FC = () => {
         <Input
           type="password"
           placeholder="Create a password"
-          className="mt-1 w-full mb-6"
+          className="mt-1 w-full mb-2"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
+        <label className="block text-sm font-light text-gray-400 mb-4">Password should contain a lowercase, an uppercase, a special character and length of 8 characters</label>
 
         <label className="block text-sm font-medium text-gray-700 mt-3">Confirm Password</label>
         <Input

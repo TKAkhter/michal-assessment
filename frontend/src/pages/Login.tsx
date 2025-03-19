@@ -6,6 +6,7 @@ import { isTokenValid } from "@/utils/utils";
 import { trpc } from "@/trpc/client";
 import { toast } from "react-toastify";
 import { Loader } from "lucide-react";
+import logger from "@/common/pino";
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +23,10 @@ export const Login: React.FC = () => {
       localStorage.setItem("token", data.token);
       toast.success("Login successful!");
       navigate("/");
+    },
+    onError: (error: any) => {
+      logger.error(error);
+      toast.error("Invalid email or password");
     },
   });
 

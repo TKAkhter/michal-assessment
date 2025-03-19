@@ -16,7 +16,7 @@ exports.trpcRouter = void 0;
 const server_1 = require("@trpc/server");
 const zod_1 = require("zod");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const mockLoader_1 = require("../mock/mockLoader");
+const mockLoaderMemory_1 = require("../mock/mockLoaderMemory");
 const jwt_1 = require("../common/jwt/jwt");
 const t = server_1.initTRPC.context().create();
 exports.trpcRouter = t.router({
@@ -45,20 +45,20 @@ exports.trpcRouter = t.router({
         useVersion: t.procedure
             .input(zod_1.z.object({ version: zod_1.z.enum(["v1", "v2"]) }))
             .mutation(({ input }) => {
-            (0, mockLoader_1.loadMockLibrary)(input.version);
+            (0, mockLoaderMemory_1.loadMockLibrary)(input.version);
             return { version: input.version };
         }),
         callMethod: t.procedure
             .input(zod_1.z.object({ version: zod_1.z.enum(["v1", "v2"]), method: zod_1.z.string() }))
-            .mutation(({ input }) => {
-            const lib = (0, mockLoader_1.loadMockLibrary)(input.version);
+            .mutation((_a) => __awaiter(void 0, [_a], void 0, function* ({ input }) {
+            const lib = yield (0, mockLoaderMemory_1.loadMockLibrary)(input.version);
             const data = lib[input.method]();
             return { [input.method]: data };
-        }),
+        })),
         all: t.procedure
             .input(zod_1.z.object({ version: zod_1.z.enum(["v1", "v2"]) }))
-            .mutation(({ input }) => {
-            const lib = (0, mockLoader_1.loadMockLibrary)(input.version);
+            .mutation((_a) => __awaiter(void 0, [_a], void 0, function* ({ input }) {
+            const lib = yield (0, mockLoaderMemory_1.loadMockLibrary)(input.version);
             if (input.version === "v1") {
                 return {
                     version: input.version,
@@ -75,6 +75,6 @@ exports.trpcRouter = t.router({
                 isConnected: lib.isConnected.toString(),
                 batteryStatus: lib.batteryStatus.toString(),
             };
-        }),
+        })),
     }),
 });
