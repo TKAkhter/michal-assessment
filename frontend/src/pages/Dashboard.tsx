@@ -12,8 +12,8 @@ export const Dashboard: React.FC = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        if (isTokenValid(token)) {
-            navigate("/");
+        if (!isTokenValid(token)) {
+            navigate("/login");
         }
     }, []);
 
