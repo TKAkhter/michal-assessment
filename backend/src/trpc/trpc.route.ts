@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { Context } from "./trpc.context";
 import { loadMockLibrary } from "../mock/mockLoaderMemory";
 import { generateToken } from "../common/jwt/jwt";
+import { v4 as uuidv4 } from 'uuid';
 
 const t = initTRPC.context<Context>().create();
 
@@ -14,7 +15,7 @@ export const trpcRouter = t.router({
       .mutation(async ({ input, ctx }) => {
         const hashedPassword = await bcrypt.hash(input.password, 10);
         const user = await ctx.prisma.users.create({
-          data: { name: input.name, email: input.email, password: hashedPassword },
+          data: { name: input.name, email: input.email, password: hashedPassword, username: input.email },
         });
         return user;
       }),

@@ -7,44 +7,44 @@ datasource db {
   url      = env("MONGODB_URI")
 }
 
-type ErrorLogsMetadata {
-  details    ErrorLogsMetadataDetails
-  loggedUser String
-  method     String
-  name       String
-  stack      String
-  status     Int
-  url        String
-}
+// type ErrorLogsMetadata {
+//   details    ErrorLogsMetadataDetails
+//   loggedUser String
+//   method     String
+//   name       String
+//   stack      String
+//   status     Int
+//   url        String
+// }
 
-type ErrorLogsMetadataDetails {
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  code       Json?
-  /// Nested objects had no data in the sample dataset to introspect a nested type.
-  data       Json
-  email      String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  id         Json?
-  /// Nested objects had no data in the sample dataset to introspect a nested type.
-  meta       Json
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  name       Json?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  status     Json?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  statusText Json?
-}
+// type ErrorLogsMetadataDetails {
+//   /// Could not determine type: the field only had null or empty values in the sample set.
+//   code       Json?
+//   /// Nested objects had no data in the sample dataset to introspect a nested type.
+//   data       Json
+//   email      String?
+//   /// Could not determine type: the field only had null or empty values in the sample set.
+//   id         Json?
+//   /// Nested objects had no data in the sample dataset to introspect a nested type.
+//   meta       Json
+//   /// Could not determine type: the field only had null or empty values in the sample set.
+//   name       Json?
+//   /// Could not determine type: the field only had null or empty values in the sample set.
+//   status     Json?
+//   /// Could not determine type: the field only had null or empty values in the sample set.
+//   statusText Json?
+// }
 
 model developments {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
 model error_logs {
-  id        String            @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   level     String
   message   String
-  metadata  ErrorLogsMetadata
-  timestamp DateTime?          @default(now()) @db.Date
+  metadata  Json
+  timestamp DateTime? @default(now()) @db.Date
 }
 
 model files {
@@ -58,7 +58,7 @@ model files {
   updatedAt DateTime @default(now()) @db.Date
   userId    String?
   userRef   String?
-  uuid      String?   @unique
+  uuid      String   @default(uuid())
   views     String?
 }
 
@@ -71,8 +71,8 @@ model users {
   password    String
   resetToken  String?
   updatedAt   DateTime? @default(now()) @db.Date
-  username    String?   @unique
-  uuid        String?   @unique
+  username    String    @unique
+  uuid        String    @default(uuid())
   bio         String?
   phoneNumber String?
 }
